@@ -1,5 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:footballapp/Data/Repository/constructor_standing_data.dart';
+import 'package:footballapp/Data/Repository/driver_standing_data.dart';
+import 'package:footballapp/Presentation/Blocs/driver_standing_bloc/driver_standing_bloc.dart';
+import 'package:footballapp/Presentation/Pages/driver_standing_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,6 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DriverStandingData drd = DriverStandingData();
+  ConstructorStandingData csd = ConstructorStandingData();
   @override
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
@@ -26,7 +33,8 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Standing', style: TextStyle(color: Colors.white, fontSize: 40),),
-            GestureDetector(
+            InkWell(
+              onTap: () => Navigator.pushNamed(context, '/driverstandingpage'),
               child: Container(
                 height: screenheight/3,
                 width: screenwidth,
@@ -49,7 +57,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            GestureDetector(
+            InkWell(
+              onTap: () => Navigator.pushNamed(context, '/constructorstandingpage'),
               child: Container(
                 height: screenheight/3,
                 width: screenwidth,
