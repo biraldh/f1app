@@ -6,8 +6,8 @@ import '../Model/driver_standing_info.dart';
 
 class DriverStandingData{
 
-  Future<List<DriverStandingInfo>> getDriverStanding() async {
-    final response = await http.get(Uri.parse('http://ergast.com/api/f1/current/driverStandings.json'));
+  Future<List<DriverStandingInfo>> getDriverStanding(year) async {
+    final response = await http.get(Uri.parse('http://ergast.com/api/f1/$year/driverStandings.json'));
 
     if (response.statusCode == 200) {
 

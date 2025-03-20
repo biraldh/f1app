@@ -12,7 +12,7 @@ class ConstructorStandingBloc extends Bloc<ConstructorStandingEvent, Constructor
     on<ConstructorStandingGet>((event, emit) async {
       try{
         emit(ConstructorStandingGetLoading());
-        final response = await csd.getConstructorStanding();
+        final response = await csd.getConstructorStanding(event.year);
         emit(ConstructorStandingGetSuccess(response));
       }catch(e){
         emit(ConstructorStandingGetFailure());
