@@ -14,18 +14,16 @@ class DriverStandingPage extends StatefulWidget {
 
 class _DriverStandingPageState extends State<DriverStandingPage> {
   final ListWidget _lw = ListWidget();
-  late String _year = '2024';
   final TextEditingController _yearcontroller = TextEditingController();
   @override
   void initState() {
     super.initState();
-    context.read<DriverStandingBloc>().add(DriverStandingGet(_year));
+    context.read<DriverStandingBloc>().add(DriverStandingGet('2024'));
   }
 
-  void updateyear(){
+  void updateYear(){
     setState(() {
-      _year = _yearcontroller.text;
-      context.read<DriverStandingBloc>().add(DriverStandingGet(_year));
+      context.read<DriverStandingBloc>().add(DriverStandingGet(_yearcontroller.text));
     });
   }
   @override
@@ -45,7 +43,7 @@ class _DriverStandingPageState extends State<DriverStandingPage> {
             child: SizedBox(
                 width: screenwidth/2,
                 child: SearchBar(hintText: 'Year', 
-                  leading: IconButton(icon: Icon(Icons.search), color: Colors.white, onPressed: () => updateyear(),),
+                  leading: IconButton(icon: Icon(Icons.search), color: Colors.white, onPressed: () => updateYear(),),
                   elevation: WidgetStateProperty.all(0),
                   hintStyle: WidgetStateProperty.all(
                     TextStyle(color: Colors.white),
@@ -69,7 +67,9 @@ class _DriverStandingPageState extends State<DriverStandingPage> {
                     itemCount: standing.length,
                     itemBuilder: (context, index) {
                       var driverInfo = standing[index];
-                      return _lw.displaystandings(driverInfo.position, driverInfo.driverName, driverInfo.points);
+                      return InkWell(
+                        onTap: () => Navigator.pushNamed(context, '/driverdetail', arguments: {'driverId' : driverInfo.driverId}) ,
+                        child: _lw.displaystandings(driverInfo.position, driverInfo.driverName, driverInfo.points));
                     },
                   );
                 } else if (state is DriverStandingGetFailure) {

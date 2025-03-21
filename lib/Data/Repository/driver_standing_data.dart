@@ -10,22 +10,19 @@ class DriverStandingData{
     final response = await http.get(Uri.parse('http://ergast.com/api/f1/$year/driverStandings.json'));
 
     if (response.statusCode == 200) {
-
       final Map<String, dynamic> jsonData = jsonDecode(response.body);
-
       final standingsJson = jsonData['MRData']['StandingsTable']['StandingsLists'] as List;
-      List<DriverStandingInfo> driverStandings = [];
-      for (var standings in standingsJson) {
-        for (var driverStanding in standings['DriverStandings']) {
-          driverStandings.add(
-            DriverStandingInfo(
-              position: driverStanding['position'],
-              driverName: "${driverStanding['Driver']['givenName']} ${driverStanding['Driver']['familyName']}",
-              points:  driverStanding['points'],
-            ),
-          );
-        }
-      }
+      List<DriverStandingInfo> driverStandings = standingsJson
+          .expand((standings) => standings['DriverStandings'])
+          .map((driverStanding) => DriverStandingInfo(
+        position: driverStanding['position'],
+        driverName:
+        "${driverStanding['Driver']['givenName']} ${driverStanding['Driver']['familyName']}",
+        points: driverStanding['points'],
+        driverId: driverStanding['Driver']['driverId'],
+      ))
+          .toList();
+
 
       return driverStandings;
     } else {

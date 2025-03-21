@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:footballapp/Presentation/Pages/constructor_standing_page.dart';
+import 'package:footballapp/Presentation/Pages/driver_detail.dart';
 import 'package:footballapp/Presentation/Pages/driver_standing_page.dart';
 
 class RouteGen {
@@ -9,6 +10,14 @@ class RouteGen {
         return MaterialPageRoute(builder: (_) => DriverStandingPage());
       case '/constructorstandingpage':
         return MaterialPageRoute(builder: (_) => ConstructorStandingPage());
+      case '/driverdetail':
+        return MaterialPageRoute(
+          builder:(context){
+            final args = settings.arguments as Map<String, dynamic>?;
+            final driverid = args?['driverId'] ?? '';
+            return DriverDetail(driverId: driverid);
+          },
+        );
       default:
         return _errorRoute();
     }

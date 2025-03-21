@@ -33,7 +33,7 @@ class _ConstructorStandingPageState extends State<ConstructorStandingPage> {
     double screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(// Your leading icon
+      appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
         title: Text('Constructor Standing', style: TextStyle(color: Colors.white),),
