@@ -29,7 +29,7 @@ class _ConstructorStandingPageState extends State<ConstructorStandingPage> {
   }
   @override
   Widget build(BuildContext context) {
-    double screenheight = MediaQuery.of(context).size.height;
+    //double screenheight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
@@ -55,6 +55,7 @@ class _ConstructorStandingPageState extends State<ConstructorStandingPage> {
                 textStyle: WidgetStateProperty.all(
                   TextStyle(color: Colors.white)
                 ),
+                onSubmitted:(value) => updateYear(),
                 controller: _yearcontroller,
                 backgroundColor: WidgetStateProperty.all(Colors.red),
               )

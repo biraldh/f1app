@@ -10,8 +10,15 @@ part 'driver_info_race_state.dart';
 class DriverInfoRaceBloc extends Bloc<DriverInfoRaceEvent, DriverInfoRaceState> {
   DriverInfoPerRaceData diprd;
   DriverInfoRaceBloc(this.diprd) : super(DriverInfoRaceInitial()) {
-    on<DriverInfoRaceEvent>((event, emit) {
-      // TODO: implement event handler
+    on<DriverInfoRaceGet>((event, emit) async {
+      try {
+        emit(DriverInfoRaceLoading());
+        final data = await diprd.getDriverInfo(event.driverId, event.year);
+        emit(DriverInfoRaceSuccess(driverinfo: data));
+      }
+      catch(e){
+        emit(DriverInfoRaceFailure());
+      }
     });
   }
 }

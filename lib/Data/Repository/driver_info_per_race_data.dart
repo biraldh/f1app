@@ -13,7 +13,6 @@ class DriverInfoPerRaceData{
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = jsonDecode(response.body);
       final List races = jsonData['MRData']['RaceTable']['Races'];
-
       List<DriverInfoPerRace> driverInfo = races.map((race) {
         final results = race['Results'][0];
 
@@ -22,10 +21,12 @@ class DriverInfoPerRaceData{
           trackName: race['raceName'],
           driverName: "${results['Driver']['givenName']} ${results['Driver']['familyName']}",
           driverPosition: results['position'],
-          points: results['points']
+          points: results['points'],
+          fastestLap: results.containsKey('FastestLap') && results['FastestLap'] != null
+              ? results['FastestLap']['Time']['time']
+              : "N/A",
         );
       }).toList();
-
       return driverInfo;
     } else {
       throw Exception('Error fetching data');

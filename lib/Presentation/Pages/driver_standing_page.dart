@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../Blocs/driver_standing_bloc/driver_standing_bloc.dart';
 import 'common/list_widget.dart';
 
@@ -13,23 +12,25 @@ class DriverStandingPage extends StatefulWidget {
 }
 
 class _DriverStandingPageState extends State<DriverStandingPage> {
+  late String year = '2024';
   final ListWidget _lw = ListWidget();
-  final TextEditingController _yearcontroller = TextEditingController();
+  final TextEditingController _yearController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    context.read<DriverStandingBloc>().add(DriverStandingGet('2024'));
+    context.read<DriverStandingBloc>().add(DriverStandingGet(year));
   }
 
   void updateYear(){
     setState(() {
-      context.read<DriverStandingBloc>().add(DriverStandingGet(_yearcontroller.text));
+      year = _yearController.text;
+      context.read<DriverStandingBloc>().add(DriverStandingGet(year));
     });
   }
   @override
   Widget build(BuildContext context) {
-    double screenheight = MediaQuery.of(context).size.height;
-    double screenwidth = MediaQuery.of(context).size.width;
+    //double screenheight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -41,7 +42,7 @@ class _DriverStandingPageState extends State<DriverStandingPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-                width: screenwidth/2,
+                width: screenWidth/2,
                 child: SearchBar(hintText: 'Year', 
                   leading: IconButton(icon: Icon(Icons.search), color: Colors.white, onPressed: () => updateYear(),),
                   elevation: WidgetStateProperty.all(0),
@@ -51,7 +52,8 @@ class _DriverStandingPageState extends State<DriverStandingPage> {
                   textStyle: WidgetStateProperty.all(
                       TextStyle(color: Colors.white)
                   ),
-                  controller: _yearcontroller,
+                  onSubmitted: (value) => updateYear(),
+                  controller: _yearController,
                   backgroundColor: WidgetStateProperty.all(Colors.red),
                 )
             ),
@@ -68,7 +70,7 @@ class _DriverStandingPageState extends State<DriverStandingPage> {
                     itemBuilder: (context, index) {
                       var driverInfo = standing[index];
                       return InkWell(
-                        onTap: () => Navigator.pushNamed(context, '/driverdetail', arguments: {'driverId' : driverInfo.driverId}) ,
+                        onTap: () => Navigator.pushNamed(context, '/driverdetail', arguments: {'driverId' : driverInfo.driverId, 'year' : year, 'driverName':driverInfo.driverName }) ,
                         child: _lw.displaystandings(driverInfo.position, driverInfo.driverName, driverInfo.points));
                     },
                   );

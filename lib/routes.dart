@@ -15,7 +15,10 @@ class RouteGen {
           builder:(context){
             final args = settings.arguments as Map<String, dynamic>?;
             final driverid = args?['driverId'] ?? '';
-            return DriverDetail(driverId: driverid);
+            final year = args?['year'] ?? '';
+            final driverName = args?['driverName'] ?? '';
+
+            return DriverDetail(driverId: driverid, year: year,driverName: driverName);
           },
         );
       default:

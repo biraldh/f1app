@@ -6,5 +6,5 @@ sealed class DriverInfoRaceEvent {}
 class DriverInfoRaceGet extends DriverInfoRaceEvent{
   String driverId;
   String year;
-  DriverInfoRaceGet(this.driverId, this.year);
+  DriverInfoRaceGet({required this.driverId, required this.year});
 }

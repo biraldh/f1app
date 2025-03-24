@@ -5,6 +5,7 @@ class DriverInfoPerRace {
   final String driverName;
   final String driverPosition;
   final String points;
+  final String fastestLap;
 
   DriverInfoPerRace({
     required this.session,
@@ -12,6 +13,7 @@ class DriverInfoPerRace {
     required this.driverName,
     required this.driverPosition,
     required this.points,
+    required this.fastestLap
   });
 
   factory DriverInfoPerRace.fromJson(Map<String, dynamic> json) {
@@ -21,7 +23,7 @@ class DriverInfoPerRace {
       driverName:
       "${json['Results'][0]['Driver']['givenName']} ${json['Results'][0]['Driver']['familyName']}",
       driverPosition: json['Results'][0]['position'] ?? '',
-      points: json['date'] ?? '',
+      points: json['fastestLap'] ?? '', fastestLap: '',
     );
   }
 
@@ -32,6 +34,7 @@ class DriverInfoPerRace {
       'driverName': driverName,
       'driverPosition': driverPosition,
       'dateOfRace': points,
+      'fastestLap': fastestLap,
     };
   }
 }
